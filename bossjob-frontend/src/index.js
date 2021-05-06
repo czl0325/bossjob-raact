@@ -1,8 +1,18 @@
 import React from "react";
 import ReactDom from "react-dom"
-import {Button} from "antd-mobile";
+import {BrowserRouter, Switch, Route} from "react-router-dom"
+import Login from "./containers/login";
+import Register from "./containers/register"
+import Main from "./containers/main"
+
 
 ReactDom.render(
-  <Button type="primary">测试按钮</Button>,
+  <BrowserRouter>
+    <Switch>
+      <Route path='/login' component={Login}/>
+      <Route path='/register' component={Register}/>
+      <Route component={Main} />
+    </Switch>
+  </BrowserRouter>,
   document.getElementById("root")
 )
