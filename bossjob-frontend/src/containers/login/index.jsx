@@ -23,7 +23,7 @@ export default class index extends Component {
     return (
       <Fragment>
         <NavBar>注册用户</NavBar>
-        <img src={Logo} width="240" height="240" style={{display: 'block', margin: '20px auto'}}/>
+        <img src={Logo} alt="Logo" width="240" height="240" style={{display: 'block', margin: '20px auto'}}/>
         <List>
           <WingBlank>
             <InputItem placeholder="请输入用户名" onChange={(val) => this.handleChange("username", val)}>用户名:</InputItem>
