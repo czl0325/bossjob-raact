@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
-import {NavBar, Button, InputItem, List, Radio, WingBlank, WhiteSpace} from "antd-mobile";
+import {NavBar, Button, InputItem, List, Radio, WingBlank, WhiteSpace, Toast} from "antd-mobile";
 import Logo from "../../assets/logo.jpeg"
+import {registerRequest} from "../../api/api";
 
 export default class index extends Component {
   constructor(props) {
@@ -20,7 +21,18 @@ export default class index extends Component {
   }
 
   onRegister = () => {
-
+    const {username, password, password2, type} = this.state
+    if (!username || !password || !password2) {
+      Toast.fail("缺少必填字段")
+      return true
+    }
+    if (password !== password2) {
+      Toast.fail("两次输入的密码不一致")
+      return true
+    }
+    registerRequest(username, password, type).then(res=>{
+      this.props.history.replace("/")
+    })
   }
 
   toLogin = () => {

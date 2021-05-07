@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
-import {Button, InputItem, List, NavBar, WhiteSpace, WingBlank} from "antd-mobile";
+import {Button, InputItem, List, NavBar, WhiteSpace, WingBlank, Toast} from "antd-mobile";
 import Logo from "../../assets/logo.jpeg";
+import {loginRequest} from "../../api/api";
 
 export default class index extends Component {
   constructor(props) {
@@ -11,8 +12,21 @@ export default class index extends Component {
     };
   }
 
-  onLogin = () => {
+  handleChange = (type, value) => {
+    this.setState({
+      [type]: value
+    })
+  }
 
+  onLogin = () => {
+    const {username, password} = this.state
+    if (!username || !password) {
+      Toast.fail("缺少必填字段!")
+      return true
+    }
+    loginRequest(username, password).then(res=>{
+      this.props.history.replace("/")
+    })
   }
 
   toRegister = () => {

@@ -1,0 +1,30 @@
+{
+  "id": "2532174",
+  "name": "boss",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1133644",
+      "name": "me",
+      "font_class": "me",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "11982657",
+      "name": "Home, homepage, menu",
+      "font_class": "Homehomepagemenu",
+      "unicode": "e9ce",
+      "unicode_decimal": 59854
+    },
+    {
+      "icon_id": "19989531",
+      "name": "message",
+      "font_class": "message",
+      "unicode": "ea3f",
+      "unicode_decimal": 59967
+    }
+  ]
+}
