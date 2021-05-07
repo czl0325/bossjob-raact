@@ -3,7 +3,7 @@ import {NavBar, Button, InputItem, List, Radio, WingBlank, WhiteSpace, Toast} fr
 import Logo from "../../assets/logo.jpeg"
 import {registerRequest} from "../../api/api";
 
-export default class index extends Component {
+export default class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {

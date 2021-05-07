@@ -3,7 +3,7 @@ import {Button, InputItem, List, NavBar, WhiteSpace, WingBlank, Toast} from "ant
 import Logo from "../../assets/logo.jpeg";
 import {loginRequest} from "../../api/api";
 
-export default class index extends Component {
+export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {

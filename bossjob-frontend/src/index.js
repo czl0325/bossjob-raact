@@ -7,6 +7,7 @@ import store from "./redux/store";
 import Login from "./containers/login";
 import Register from "./containers/register"
 import Main from "./containers/main"
+import Setting from "./containers/me/setting";
 
 
 ReactDom.render(
@@ -15,6 +16,7 @@ ReactDom.render(
       <Switch>
         <Route path='/login' component={Login}/>
         <Route path='/register' component={Register}/>
+        <Route path='/setting' component={Setting} />
         <Route component={Main} />
       </Switch>
     </BrowserRouter>
