@@ -1,3 +1,4 @@
+
 var express = require('express');
 var router = express.Router();
 const md5 = require('blueimp-md5')
@@ -6,6 +7,7 @@ const formidable = require('formidable')
 
 const {UserModel} = require("../db/models")
 const tools = require("../utils/tools")
+const BaseResponse = require("../utils/baseResponse")
 
 router.post('/register', function (req, res) {
   const {username, password, type} = req.body
@@ -40,6 +42,14 @@ router.post('/login', function (req, res) {
       res.send({code: 4002, message: '查无此用户'});
     }
   })
+})
+
+router.get('/get', function (req, res) {
+  const user_id = req.cookies.user_id
+  if (!user_id) {
+    res.send(BaseResponse.createErrorMessage(5000, "未登录"))
+  }
+  res.send(BaseResponse.createSuccessMessage("111"))
 })
 
 router.post('/update', function (req, res) {

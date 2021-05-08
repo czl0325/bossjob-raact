@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {List, NavBar, TextareaItem, ImagePicker, Button, WhiteSpace} from "antd-mobile";
+import {List, NavBar, TextareaItem, ImagePicker, Button, WhiteSpace, Icon} from "antd-mobile";
 import {updateUser} from "../../../api/api";
 
 export default class Setting extends Component {
@@ -26,7 +26,7 @@ export default class Setting extends Component {
       file = avatars[0].file
     }
     updateUser(file, info).then(res=>{
-      
+
     })
   }
 
@@ -34,7 +34,7 @@ export default class Setting extends Component {
     const {avatars} = this.state
     return (
       <div>
-        <NavBar>设置</NavBar>
+        <NavBar icon={<Icon type="left" />} onClick={()=>this.props.history.goBack()}>设置</NavBar>
         <List>
           <List.Item extra={
             <ImagePicker
