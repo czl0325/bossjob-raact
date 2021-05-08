@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
-import {List, NavBar, TextareaItem, ImagePicker, Button, WhiteSpace, Icon} from "antd-mobile";
-import {updateUser} from "../../../api/api";
+import {List, NavBar, TextareaItem, ImagePicker, Button, WhiteSpace, Icon, Toast} from "antd-mobile";
+import {getUserInfo, updateUser} from "../../../api/api";
+import {getPictureUrl} from "../../../utils/tools";
 
 export default class Setting extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: {},
       avatars: [],
       info: ''
     };
@@ -26,12 +28,27 @@ export default class Setting extends Component {
       file = avatars[0].file
     }
     updateUser(file, info).then(res=>{
+      Toast.success("更新信息成功")
+      this.setState({
+        user: res,
+        avatars: res.avatar ? [getPictureUrl(res.avatar)] : [],
+        info: res.info || ''
+      })
+    })
+  }
 
+  componentDidMount() {
+    getUserInfo().then(res=>{
+      this.setState({
+        user: res,
+        avatars: res.avatar ? [{url:getPictureUrl(res.avatar), id:0}] : [],
+        info: res.info || ''
+      })
     })
   }
 
   render() {
-    const {avatars} = this.state
+    const {avatars, info} = this.state
     return (
       <div>
         <NavBar icon={<Icon type="left" />} onClick={()=>this.props.history.goBack()}>设置</NavBar>
@@ -44,6 +61,8 @@ export default class Setting extends Component {
               files={avatars}
               onChange={this.onChangeAvatar}/>}>头像</List.Item>
           <TextareaItem
+            ref={c => this.infoRef = c}
+            value={info}
             title="个人简介"
             autoHeight
             labelNumber={5}

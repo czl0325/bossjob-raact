@@ -9,6 +9,14 @@ const {UserModel} = require("../db/models")
 const tools = require("../utils/tools")
 const BaseResponse = require("../utils/baseResponse")
 
+const filter = {password: 0, __v: 0}
+
+function packUser(user) {
+  delete user["password"]
+  delete user["__v"]
+  return user
+}
+
 router.post('/register', function (req, res) {
   const {username, password, type} = req.body
   if (!username || !password || !type) {
@@ -19,8 +27,8 @@ router.post('/register', function (req, res) {
       res.send({code: 4001, message: '用户已存在'});
     } else {
       new UserModel({username, type, password:md5(password)}).save(function (err, user) {
-        res.cookie("user_id", user._id, {maxAge: 60*60*24*365})
-        res.send({code: 0, message: "获取用户成功", data: user})
+        res.cookie("user_id", user._id, {maxAge: 1000*60*60*24*365})
+        res.send(BaseResponse.createSuccessMessage(user))
       })
     }
   })
@@ -34,12 +42,13 @@ router.post('/login', function (req, res) {
   UserModel.findOne({username}, function (err, user) {
     if (user) {
       if (user.password === md5(password)) {
-        res.send({code: 0, message: '成功', data: user});
+        res.cookie("user_id", user._id, {maxAge: 1000*60*60*24*365})
+        res.send(BaseResponse.createSuccessMessage(packUser(user)));
       } else {
-        res.send({code: 4003, message: '密码错误'});
+        res.send(BaseResponse.createErrorMessage(4003, "密码错误"));
       }
     } else {
-      res.send({code: 4002, message: '查无此用户'});
+      res.send(BaseResponse.createErrorMessage(4002, "查无此用户"));
     }
   })
 })
@@ -49,7 +58,9 @@ router.get('/get', function (req, res) {
   if (!user_id) {
     res.send(BaseResponse.createErrorMessage(5000, "未登录"))
   }
-  res.send(BaseResponse.createSuccessMessage("111"))
+  UserModel.findOne({_id: user_id}, filter, function (err, user) {
+    res.send(BaseResponse.createSuccessMessage(user))
+  })
 })
 
 router.post('/update', function (req, res) {
@@ -76,7 +87,8 @@ router.post('/update', function (req, res) {
         res.clearCookie("user_id")
         res.send({code: 5000, message: '未登录'});
       } else {
-        res.send({code: 0, data: user})
+        const newUser = packUser({...oldUser, ...user})
+        res.send({code: 0, data: newUser})
       }
     })
   })

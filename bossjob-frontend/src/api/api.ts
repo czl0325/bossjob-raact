@@ -12,3 +12,7 @@ export const registerRequest = (username: string, password: string, type: number
 export const updateUser = (file: FileModel, info: string) => {
   return http1.upload("user/update", file, {info})
 }
+
+export const getUserInfo = () => {
+  return http1.get("user/get")
+}

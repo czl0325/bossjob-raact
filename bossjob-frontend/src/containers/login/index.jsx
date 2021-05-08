@@ -36,7 +36,7 @@ export default class Login extends Component {
   render() {
     return (
       <Fragment>
-        <NavBar>注册用户</NavBar>
+        <NavBar>用户登录</NavBar>
         <img src={Logo} alt="Logo" width="240" height="240" style={{display: 'block', margin: '20px auto'}}/>
         <List>
           <WingBlank>

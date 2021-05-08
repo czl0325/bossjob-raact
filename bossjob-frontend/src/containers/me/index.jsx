@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {NavLink, Route, withRouter} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import Avatar from '../../assets/avatar.jpeg'
 import {List, NavBar} from "antd-mobile";
-import Setting from "./setting";
+import Cookie from 'js-cookie'
 
 class Me extends Component {
   constructor(props) {
@@ -10,17 +10,23 @@ class Me extends Component {
     this.state = {};
   }
 
+  toSetting = () => {
+    const user_id = Cookie.get("user_id")
+    if (!user_id) {
+      this.props.history.replace("/login")
+    } else {
+      this.props.history.push("/setting")
+    }
+  }
+
   render() {
-    console.log(this.props.history)
     return (
       <div>
         <NavBar>我的</NavBar>
-        <img style={{width:'60px',height:'60px',display:'block',margin:'30px auto',borderRadius:'50%'}} src={Avatar}/>
+        <img alt="头像" style={{width:'60px',height:'60px',display:'block',margin:'30px auto',borderRadius:'50%'}} src={Avatar} onClick={this.toSetting}/>
 
         <List >
-          <NavLink to='/setting'>
-            <List.Item arrow="horizontal">设置</List.Item>
-          </NavLink>
+          <List.Item arrow="horizontal" onClick={this.toSetting}>设置</List.Item>
         </List>
       </div>
     )
