@@ -16,3 +16,7 @@ export const updateUser = (file: FileModel, info: string) => {
 export const getUserInfo = () => {
   return http1.get("user/get")
 }
+
+export const getUserList = (type: number=2) => {
+  return http1.get("user/list", {type})
+}
