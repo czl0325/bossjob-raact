@@ -40,12 +40,13 @@ export class HttpService {
     let configs = {
       headers: {'Content-Type':'multipart/form-data'}
     };
-    // @ts-ignore
-    formData.append('file', file)
+    if (file) {
+      // @ts-ignore
+      formData.append('file', file)
+    }
     Object.keys(params).forEach((key) => {
       formData.append(key, params[key])
     })
-    debugger;
     return new Promise((resolve, reject) => {
       // @ts-ignore
       this.myAxios.post(url, formData, configs).then((res:BaseResponseData) => {

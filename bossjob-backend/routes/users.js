@@ -82,13 +82,12 @@ router.post('/update', function (req, res) {
     const {post, info, company, salary} = fields
     let user = {avatar, post, info, company, salary}
     user = tools.deleteNullProperty(user)
-    UserModel.findByIdAndUpdate({_id: user_id}, user, function (err, oldUser) {
-      if (!oldUser) {
+    UserModel.findByIdAndUpdate({_id: user_id}, user, {new: true}, function (err, user) {
+      if (!user) {
         res.clearCookie("user_id")
         res.send({code: 5000, message: '未登录'});
       } else {
-        const newUser = packUser({...oldUser, ...user})
-        res.send({code: 0, data: newUser})
+        res.send({code: 0, data: user})
       }
     })
   })

@@ -31,7 +31,7 @@ export default class Setting extends Component {
       Toast.success("更新信息成功")
       this.setState({
         user: res,
-        avatars: res.avatar ? [getPictureUrl(res.avatar)] : [],
+        avatars: res.avatar ? [{url:getPictureUrl(res.avatar), id:0}] : [],
         info: res.info || ''
       })
     })
