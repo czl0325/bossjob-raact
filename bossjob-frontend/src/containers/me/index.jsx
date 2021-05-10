@@ -1,13 +1,28 @@
 import React, {Component} from 'react';
-import {Link, withRouter} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
+import {connect} from "react-redux";
 import Avatar from '../../assets/avatar.jpeg'
-import {List, NavBar} from "antd-mobile";
+import {Button, List, NavBar} from "antd-mobile";
 import Cookie from 'js-cookie'
+import {createUpdateUserAction, createResetUserAction} from "../../redux/actions";
+import {getUserInfo} from "../../api/api";
 
 class Me extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  componentDidMount() {
+    const {user} = this.props
+    if (!user._id) {
+      const user_id = Cookie.get("user_id")
+      if (user_id) {
+        getUserInfo().then(res=>{
+          this.props.createUpdateUserAction(res)
+        })
+      }
+    }
   }
 
   toSetting = () => {
@@ -20,17 +35,22 @@ class Me extends Component {
   }
 
   render() {
+    const {user} = this.props
     return (
       <div>
         <NavBar>我的</NavBar>
         <img alt="头像" style={{width:'60px',height:'60px',display:'block',margin:'30px auto',borderRadius:'50%'}} src={Avatar} onClick={this.toSetting}/>
+        <span>{user.username}</span>
 
         <List >
-          <List.Item arrow="horizontal" onClick={this.toSetting}>设置</List.Item>
+          <Button type="warning">退出登录</Button>
         </List>
       </div>
     )
   }
 }
 
-export default withRouter(Me)
+export default connect(
+  state => ({user: state.user}),
+  {createUpdateUserAction, createResetUserAction}
+)(withRouter(Me))

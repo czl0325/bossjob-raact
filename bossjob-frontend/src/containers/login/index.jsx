@@ -1,9 +1,11 @@
 import React, {Component, Fragment} from 'react';
+import {connect} from "react-redux";
 import {Button, InputItem, List, NavBar, WhiteSpace, WingBlank, Toast} from "antd-mobile";
 import Logo from "../../assets/logo.jpeg";
 import {loginRequest} from "../../api/api";
+import {createUpdateUserAction, createResetUserAction} from "../../redux/actions";
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,7 +27,10 @@ export default class Login extends Component {
       return true
     }
     loginRequest(username, password).then(res=>{
+      this.props.createUpdateUserAction(res)
       this.props.history.replace("/")
+    }).catch(err=>{
+      this.props.createResetUserAction()
     })
   }
 
@@ -55,3 +60,8 @@ export default class Login extends Component {
     )
   }
 }
+
+export default connect(
+  state => ({user: state.user}),
+  {createUpdateUserAction, createResetUserAction}
+)(Login)
