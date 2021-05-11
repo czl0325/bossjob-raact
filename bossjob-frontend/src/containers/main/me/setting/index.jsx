@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {List, NavBar, TextareaItem, ImagePicker, Button, WhiteSpace, Icon, Toast} from "antd-mobile";
-import {getUserInfo, updateUser} from "../../../api/api";
-import {getPictureUrl} from "../../../utils/tools";
+import {getUserInfo, updateUser} from "../../../../api/api";
+import {getPictureUrl} from "../../../../utils/tools";
 
 export default class Setting extends Component {
   constructor(props) {

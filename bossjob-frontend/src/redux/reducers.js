@@ -26,8 +26,9 @@ function user(preState=initUser, action) {
   const {type,data} = action
   switch (type) {
     case USER_UPDATE:
-      return  Object.assign({}, preState, data)
+      return Object.assign({}, preState, data)
     case USER_RESET:
+      return initUser
     default:
       return preState
   }

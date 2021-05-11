@@ -3,8 +3,10 @@ import {connect} from "react-redux";
 import { TabBar } from 'antd-mobile';
 import '../../assets/iconfont/iconfont.css'
 import Home from './home'
-import Me from '../me'
-import {createTabAction} from "../../redux/actions";
+import Me from './me'
+import {createTabAction, createUpdateUserAction} from "../../redux/actions";
+import Cookie from "js-cookie";
+import {getUserInfo} from "../../api/api";
 
 class Main extends Component {
   constructor(props) {
@@ -12,6 +14,18 @@ class Main extends Component {
     this.state = {
 
     };
+  }
+
+  componentDidMount() {
+    const {user} = this.props
+    if (!user._id) {
+      const user_id = Cookie.get("user_id")
+      if (user_id) {
+        getUserInfo().then(res=>{
+          this.props.createUpdateUserAction(res)
+        })
+      }
+    }
   }
 
   renderContent(pageText) {
@@ -39,7 +53,8 @@ class Main extends Component {
 
 export default connect(
   state => ({
-    tab: state.tab
+    tab: state.tab,
+    user: state.user
   }),
-  {createTabAction}
+  {createTabAction, createUpdateUserAction}
 )(Main)
