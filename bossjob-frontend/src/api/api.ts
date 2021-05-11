@@ -9,8 +9,8 @@ export const registerRequest = (username: string, password: string, type: number
   return http1.post("user/register", {username, password, type})
 }
 
-export const updateUser = (file: FileModel, info: string) => {
-  return http1.upload("user/update", file, {info})
+export const updateUser = (file: FileModel, user: object) => {
+  return http1.upload("user/update", file, {...user})
 }
 
 export const getUserInfo = () => {
