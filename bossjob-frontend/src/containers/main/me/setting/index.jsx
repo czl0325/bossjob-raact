@@ -14,10 +14,9 @@ class Setting extends Component {
   }
 
   componentDidMount() {
-    getUserInfo().then(res=>{
-      this.setState({
-        avatars: res.avatar ? [{url:getPictureUrl(res.avatar), id:0}] : [],
-      })
+    const {user} = this.props
+    this.setState({
+      avatars: user.avatar ? [{url:getPictureUrl(user.avatar), id:0}] : [],
     })
   }
 

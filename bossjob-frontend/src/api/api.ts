@@ -17,6 +17,6 @@ export const getUserInfo = () => {
   return http1.get("user/get")
 }
 
-export const getUserList = (type: number=2) => {
+export const getUserList = (type: number=2, pageNum: number=0) => {
   return http1.get("user/list", {type})
 }

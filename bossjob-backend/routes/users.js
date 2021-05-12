@@ -64,11 +64,12 @@ router.get('/get', function (req, res) {
 })
 
 router.get('/list', function (req, res) {
-  let {type} = req.query
+  let {type, pageNum, pageSize} = req.query
   if (!type) {
     type = 2
   }
-  UserModel.find({type}, filter, function (err, users) {
+  const num = parseInt(pageNum||'0')*parseInt(pageSize||'10')
+  UserModel.find({type}, filter, {skip: num, limit: pageSize||10}, function (err, users) {
     res.send(BaseResponse.createSuccessMessage(users))
   })
 })
