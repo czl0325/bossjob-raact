@@ -8,15 +8,10 @@ import Login from "./containers/login";
 import Register from "./containers/register"
 import Main from "./containers/main"
 import Setting from "./containers/main/me/setting";
+import Chat from "./containers/chat";
+import BossSocket from "./utils/socket";
 
-import io from 'socket.io-client'
-
-//const socket = io("wss://127.0.0.1:4100/test")
-const socket = io("ws://localhost:4000", { autoConnect: true });
-
-socket.onAny((event, ...args) => {
-  console.log(event, args);
-});
+BossSocket.getInstance().initSocket()
 
 ReactDom.render(
   <Provider store={store}>
@@ -25,6 +20,7 @@ ReactDom.render(
         <Route path='/login' component={Login}/>
         <Route path='/register' component={Register}/>
         <Route path='/setting' component={Setting} />
+        <Route path='/chat/:user_id' component={Chat} />
         <Route component={Main} />
       </Switch>
     </BrowserRouter>

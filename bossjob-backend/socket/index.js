@@ -1,20 +1,13 @@
-module.exports = function () {
-  const io = require("socket.io")({
-    path: "/test",
-    serveClient: false,
+module.exports = function (server) {
+  const io = require('socket.io')(server, {
+    cors: {
+      origin: "http://localhost:3000",
+    }
   });
-
-  const server = require("http").createServer();
-
-  io.attach(server, {
-    pingInterval: 10000,
-    pingTimeout: 5000,
-    cookie: false
+  io.on('connection', (socket) => {
+    console.log('客户端连接')
+    socket.on('c2s', function (data) {
+      console.log(data)
+    })
   });
-
-  io.on("connection", (socket) => {
-    console.log("有客户端连接");
-    console.log(socket);
-  });
-  server.listen(4100);
 }

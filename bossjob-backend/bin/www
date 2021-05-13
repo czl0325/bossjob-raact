@@ -24,12 +24,7 @@ const server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-const io = require('socket.io')(server, {
-  cors: {
-    origin: "http://localhost:3000",
-  }
-});
-io.on('connection', () => { console.log('客户端连接') });
+require('../socket')(server)
 
 server.listen(port);
 server.on('error', onError);

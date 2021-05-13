@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {NavBar, ListView, PullToRefresh, WhiteSpace, Card} from "antd-mobile";
+import {withRouter} from "react-router-dom"
 import {connect} from "react-redux";
 import {getUserList} from "../../../api/api";
 import {getPictureUrl} from "../../../utils/tools";
@@ -22,6 +23,7 @@ class Home extends Component {
 
   componentDidMount() {
     this.requestUserList(true)
+    console.log(this.props)
   }
 
   onRefresh = () => {
@@ -57,7 +59,7 @@ class Home extends Component {
       return (
         <div key={rowData._id}>
           <WhiteSpace />
-          <Card style={{margin: '0 10px'}}>
+          <Card style={{margin: '0 10px'}} onClick={()=>this.props.history.push(`/chat/${rowData._id}`)}>
             <Card.Header
               thumb={<img src={rowData.avatar ? getPictureUrl(rowData.avatar) : Avatar} alt='头像' width='40'/>}
               extra={rowData.username}
@@ -99,4 +101,4 @@ class Home extends Component {
 export default connect(
   state => ({user: state.user}),
   {}
-)(Home)
+)(withRouter(Home))

@@ -22,8 +22,12 @@ const userModel = mongoose.model("user", userSchema)
 exports.UserModel = userModel
 
 const chatSchema = mongoose.Schema({
-  from: {type: String, required: true},     // 发送用户的id
-  to: {type: String, required: true},       // 接收用户的id
+  from_id: {type: String, required: true},     // 发送用户的id
+  from_avatar: {type: String, default: ''},     // 发送用户的id
+  from_name: {type: String, required: true},     // 发送用户的id
+  to_id: {type: String, required: true},       // 接收用户的id
+  to_avatar: {type: String, default: ''},     // 发送用户的id
+  to_name: {type: String, required: true},     // 发送用户的id
   chat_id: {type: String, required: true},  // from和to组成的字符串
   content: {type: String, required: true},  // 内容
   read: {type:Boolean, default: false},     // 标识是否已读

@@ -1,6 +1,6 @@
 
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const md5 = require('blueimp-md5')
 const path = require('path')
 const formidable = require('formidable')
