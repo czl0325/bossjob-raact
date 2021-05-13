@@ -4,6 +4,7 @@ import {Button, InputItem, List, NavBar, WhiteSpace, WingBlank, Toast} from "ant
 import Logo from "../../assets/logo.jpeg";
 import {loginRequest} from "../../api/api";
 import {createUpdateUserAction, createResetUserAction} from "../../redux/actions";
+import BossSocket from "../../utils/socket";
 
 class Login extends Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class Login extends Component {
     }
     loginRequest(username, password).then(res=>{
       this.props.createUpdateUserAction(res)
+      BossSocket.getInstance().connectServer(res._id)
       this.props.history.replace("/")
     }).catch(err=>{
       this.props.createResetUserAction()

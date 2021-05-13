@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react';
 import {NavBar, Button, InputItem, List, Radio, WingBlank, WhiteSpace, Toast} from "antd-mobile";
 import Logo from "../../assets/logo.jpeg"
 import {registerRequest} from "../../api/api";
+import BossSocket from "../../utils/socket";
 
 export default class Register extends Component {
   constructor(props) {
@@ -31,6 +32,7 @@ export default class Register extends Component {
       return true
     }
     registerRequest(username, password, type).then(res=>{
+      BossSocket.getInstance().connectServer(res._id)
       this.props.history.replace("/")
     })
   }

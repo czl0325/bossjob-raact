@@ -8,6 +8,7 @@ import Message from './message'
 import {createTabAction, createUpdateUserAction} from "../../redux/actions";
 import Cookie from "js-cookie";
 import {getUserInfo} from "../../api/api";
+import BossSocket from "../../utils/socket";
 
 class Main extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class Main extends Component {
       const user_id = Cookie.get("user_id")
       if (user_id) {
         getUserInfo().then(res=>{
+          BossSocket.getInstance().connectServer(user_id)
           this.props.createUpdateUserAction(res)
         })
       }

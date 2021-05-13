@@ -9,9 +9,7 @@ import Register from "./containers/register"
 import Main from "./containers/main"
 import Setting from "./containers/main/me/setting";
 import Chat from "./containers/chat";
-import BossSocket from "./utils/socket";
 
-BossSocket.getInstance().initSocket()
 
 ReactDom.render(
   <Provider store={store}>
