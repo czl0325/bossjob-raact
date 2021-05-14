@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {Grid, InputItem, List, NavBar, Toast} from "antd-mobile";
+import {Grid, InputItem, Icon, NavBar, Toast} from "antd-mobile";
 import {createSendMessageAction} from "../../redux/actions";
 import ChatItem from "../../components/ChatItem";
 import {getChatMessageList} from "../../api/api";
@@ -47,7 +47,7 @@ class Chat extends Component {
     const {showEmoji, content, messageList} = this.state
     return (
       <div>
-        <NavBar>聊天列表</NavBar>
+        <NavBar icon={<Icon type="left" />} onLeftClick={()=>this.props.history.goBack()}>聊天列表</NavBar>
         <div style={{marginBottom:'50px'}}>
           {
             messageList.map(message => {

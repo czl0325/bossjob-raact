@@ -23,7 +23,6 @@ class Home extends Component {
 
   componentDidMount() {
     this.requestUserList(true)
-    console.log(this.props)
   }
 
   onRefresh = () => {
