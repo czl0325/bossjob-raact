@@ -51,7 +51,7 @@ class Chat extends Component {
         <div style={{marginBottom:'50px'}}>
           {
             messageList.map(message => {
-              return <ChatItem chat={message} />
+              return <ChatItem key={message._id} chat={message} />
             })
           }
         </div>
