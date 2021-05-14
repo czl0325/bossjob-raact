@@ -20,3 +20,7 @@ export const getUserInfo = () => {
 export const getUserList = (type: number=2, pageNum: number=0) => {
   return http1.get("user/list", {type})
 }
+
+export const getChatMessageList = (them_id: string) => {
+  return http1.get("msgList", {them_id})
+}

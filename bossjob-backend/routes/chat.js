@@ -23,7 +23,14 @@ router.post('/read', function (req, res) {
 })
 
 router.get('/msgList', function (req, res) {
-
+  const me_id = req.cookies.user_id
+  if (!me_id) {
+    res.send(BaseResponse.createErrorMessage(5000, "请先登录"))
+  }
+  const them_id = req.query.them_id
+  ChatModel.find({'$or': [{'$and': [{'from_id': me_id, to_id: them_id}]}, {'$and': [{'from_id': them_id, to_id: me_id}]}]}, function (err, msgs) {
+    res.send(BaseResponse.createSuccessMessage(msgs))
+  })
 })
 
 module.exports = router;

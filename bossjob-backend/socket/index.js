@@ -20,7 +20,6 @@ module.exports = function (server) {
       const create_time = Date.now()
       const chat = new ChatModel({from_id, from_avatar: from_user.avatar, from_name: from_user.username, to_id, to_avatar: to_user.avatar, to_name: to_user.username, chat_id: [from_id, to_id].sort().join('_'), content, create_time})
       const newMsg = await chat.save()
-      //socket.to(`j:"${from_id}"`).to(`j:"${to_id}"`).emit('s2c', newMsg)
       if (socketMap.get(from_id)) {
         socketMap.get(from_id).emit('s2c', newMsg);
       }

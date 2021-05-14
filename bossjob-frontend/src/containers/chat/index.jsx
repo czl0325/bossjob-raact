@@ -1,15 +1,17 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {Grid, InputItem, List, NavBar, Toast} from "antd-mobile";
-import Avatar from '../../assets/avatar.jpeg'
 import {createSendMessageAction} from "../../redux/actions";
+import ChatItem from "../../components/ChatItem";
+import {getChatMessageList} from "../../api/api";
 
 class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
       content: '',
-      showEmoji: false
+      showEmoji: false,
+      messageList: []
     };
   }
 
@@ -19,6 +21,11 @@ class Chat extends Component {
       ,'😁', '🤣','😀', '😁', '🤣','😀', '😁', '🤣','😀', '😁', '🤣'
       ,'😁', '🤣','😀', '😁', '🤣','😀', '😁', '🤣','😀', '😁', '🤣']
     this.emojis = emojis.map(emoji => ({text: emoji}))
+
+    const to_id = this.props.match.params.user_id
+    getChatMessageList(to_id).then(res=>{
+      this.setState({messageList: res})
+    })
   }
 
   handleSend = () => {
@@ -37,18 +44,17 @@ class Chat extends Component {
   }
 
   render() {
-    const {showEmoji, content} = this.state
+    const {showEmoji, content, messageList} = this.state
     return (
       <div>
         <NavBar>聊天列表</NavBar>
-        <List style={{marginBottom:'50px'}}>
-          <List.Item thumb={Avatar} extra='客户'>
-            你好
-          </List.Item>
-          <List.Item thumb={Avatar} extra='我'>
-            你好
-          </List.Item>
-        </List>
+        <div style={{marginBottom:'50px'}}>
+          {
+            messageList.map(message => {
+              return <ChatItem chat={message} />
+            })
+          }
+        </div>
         <div className="am-tab-bar" style={{position:'fixed', bottom:0, width: '100%', left: 0, height: "inherit"}}>
           <InputItem
             placeholder='请输入您要发送的消息'
