@@ -1,4 +1,5 @@
 import io from 'socket.io-client'
+import {createReceiveMessageAction} from "../redux/actions";
 
 export default class BossSocket {
   constructor() {
@@ -23,6 +24,7 @@ export default class BossSocket {
     // });
     this.socket.on('s2c', function (data) {
       console.log("客户端收到消息",data)
+      createReceiveMessageAction(data)
     })
     return this.socket
   }
@@ -38,7 +40,6 @@ export default class BossSocket {
   }
 
   sendMessage({from_id, to_id, content}) {
-    console.log(this.socket)
     if (this.socket) {
       console.log("客户端向服务端发送消息", {from_id, to_id, content})
       this.socket.emit('c2s', {from_id, to_id, content})
