@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {NavBar, ListView, PullToRefresh, WhiteSpace, Card} from "antd-mobile";
 import {withRouter} from "react-router-dom"
 import {connect} from "react-redux";
+import PubSub from 'pubsub-js'
 import {getUserList} from "../../../api/api";
 import {getPictureUrl} from "../../../utils/tools";
 import Avatar from '../../../assets/avatar.jpeg'
@@ -23,6 +24,13 @@ class Home extends Component {
 
   componentDidMount() {
     this.requestUserList(true)
+    this.noticeToken = PubSub.subscribe("reloadHome", (msg, data) => {
+      this.requestUserList(true)
+    })
+  }
+
+  componentWillUnmount() {
+    PubSub.unsubscribe(this.noticeToken)
   }
 
   onRefresh = () => {
@@ -33,10 +41,8 @@ class Home extends Component {
     this.setState({
       loading: true
     })
-
   }
 
-  pageNum = 0
   requestUserList = (refresh) => {
     const {user} = this.props
     if (refresh) {

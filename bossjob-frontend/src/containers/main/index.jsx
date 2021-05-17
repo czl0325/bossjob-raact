@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import { TabBar } from 'antd-mobile';
+import PubSub from 'pubsub-js';
 import '../../assets/iconfont/iconfont.css'
 import Home from './home'
 import Me from './me'
@@ -26,6 +27,7 @@ class Main extends Component {
         getUserInfo().then(res=>{
           BossSocket.getInstance().connectServer(user_id)
           this.props.createUpdateUserAction(res)
+          PubSub.publish("reloadHome")
         })
       }
     }
