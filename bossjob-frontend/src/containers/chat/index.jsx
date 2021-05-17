@@ -26,7 +26,10 @@ class Chat extends Component {
     const to_id = this.props.match.params.user_id
     getChatMessageList(to_id).then(res=>{
       this.props.createReceiveMessageListAction(res)
-      window.scrollTo(0, document.body.scrollHeight)
+      setTimeout(()=>{
+        console.log('触发')
+        window.scrollTo(0, document.body.scrollHeight)
+      }, 100)
     })
   }
 
@@ -67,9 +70,18 @@ class Chat extends Component {
     const chat_id = [from_id, to_id].sort().join('_')
     const {chat} = this.props
     const messageList = chat[chat_id]
+    let message = null
+    if (Array.isArray(messageList)) {
+      messageList.forEach(msg => {
+        if (msg.to_id !== from_id) {
+          message = msg
+          return true
+        }
+      })
+    }
     return (
       <div>
-        <NavBar icon={<Icon type="left" />} onLeftClick={()=>this.props.history.goBack()}>聊天列表</NavBar>
+        <NavBar icon={<Icon type="left" />} onLeftClick={()=>this.props.history.goBack()}>{message ? message.to_name : '聊天列表'}</NavBar>
         <div className='container' style={{marginBottom: showEmoji?'232px':'47px'}}>
           {
             Array.isArray(messageList) ?
