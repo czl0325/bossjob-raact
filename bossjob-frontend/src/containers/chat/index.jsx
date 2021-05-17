@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {Grid, InputItem, Icon, NavBar, Toast} from "antd-mobile";
-import {createSendMessageAction} from "../../redux/actions";
+import {createReceiveMessageListAction, createSendMessageAction} from "../../redux/actions";
 import ChatItem from "../../components/ChatItem";
 import {getChatMessageList} from "../../api/api";
+import {getUserId} from "../../utils/tools";
 
 class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
       content: '',
-      showEmoji: false,
-      messageList: []
+      showEmoji: false
     };
   }
 
@@ -24,13 +24,17 @@ class Chat extends Component {
 
     const to_id = this.props.match.params.user_id
     getChatMessageList(to_id).then(res=>{
-      this.setState({messageList: res})
+      this.props.createReceiveMessageListAction(res)
       window.scrollTo(0, document.body.scrollHeight)
     })
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    window.scrollTo(0, document.body.scrollHeight)
+  }
+
   handleSend = () => {
-    const from_id = this.props.user._id
+    const from_id = this.props.user._id || getUserId()
     const to_id = this.props.match.params.user_id
     const content = this.state.content.trim()
     if (!content) {
@@ -45,15 +49,21 @@ class Chat extends Component {
   }
 
   render() {
-    const {showEmoji, content, messageList} = this.state
+    const {showEmoji, content} = this.state
+    const from_id = this.props.user._id || getUserId()
+    const to_id = this.props.match.params.user_id
+    const chat_id = [from_id, to_id].sort().join('_')
+    const {chat} = this.props
+    const messageList = chat[chat_id]
     return (
       <div>
         <NavBar icon={<Icon type="left" />} onLeftClick={()=>this.props.history.goBack()}>聊天列表</NavBar>
         <div className='container'>
           {
+            Array.isArray(messageList) ?
             messageList.map(message => {
               return <ChatItem key={message._id} chat={message} />
-            })
+            }) : null
           }
         </div>
         <div className="am-tab-bar" style={{position:'fixed', bottom:0, width: '100%', left: 0, height: "inherit"}}>
@@ -78,6 +88,6 @@ class Chat extends Component {
 }
 
 export default connect(
-  state => ({user: state.user}),
-  {createSendMessageAction}
+  state => ({user: state.user, chat: state.chat}),
+  {createReceiveMessageListAction, createSendMessageAction}
 )(Chat)

@@ -1,5 +1,5 @@
 import {combineReducers} from "redux"
-import {CHANGE_TAB, USER_UPDATE, USER_RESET, RECEIVE_MESSAGE} from "./action-types";
+import {CHANGE_TAB, USER_UPDATE, USER_RESET, RECEIVE_MESSAGE, RECEIVE_MESSAGE_LIST} from "./action-types";
 
 
 function tab(preState, action) {
@@ -34,13 +34,23 @@ function user(preState=initUser, action) {
   }
 }
 
-const initChat = []
+const initChat = {}
 function chat(preState=initChat, action) {
   const {type, data} = action
   switch (type) {
+    case RECEIVE_MESSAGE_LIST:
+      const newState1 = {...preState}
+      if (Array.isArray(data) && data.length > 0) {
+        const chat = data[0]
+        newState1[chat.chat_id] = data
+      }
+      return newState1
     case RECEIVE_MESSAGE:
-      console.log("收到RECEIVE_MESSAGE消息", data)
-      return preState
+      const newState2 = {...preState}
+      if (typeof data === 'object' && data.chat_id) {
+        newState2[data.chat_id] = [...newState2[data.chat_id], data]
+      }
+      return newState2
     default:
       return preState
   }
