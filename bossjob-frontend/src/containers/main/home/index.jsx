@@ -77,21 +77,23 @@ class Home extends Component {
     return (
       <div>
         <NavBar>首页</NavBar>
-        <ListView
-          style={{height:'calc(100vh - 92px)',overflow:'auto'}}
-          dataSource={dataSource.cloneWithRows(users)}
-          renderHeader={null}
-          renderFooter={() => (<div style={{ padding: 0, textAlign: 'center' }}>
-            {loading ? '加载中' : '加载完成'}
-          </div>)}
-          renderRow={row}
-          pullToRefresh={
-            <PullToRefresh
-              refreshing={refreshing}
-              onRefresh={this.onRefresh} />
-          }
-          onEndReached={this.onEndReached}
-          pageSize={5} />
+        <div className='container'>
+          <ListView
+            style={{height:'calc(100vh - 92px)',overflow:'auto'}}
+            dataSource={dataSource.cloneWithRows(users)}
+            renderHeader={null}
+            renderFooter={() => (<div style={{ padding: 0, textAlign: 'center' }}>
+              {loading ? '加载中' : '加载完成'}
+            </div>)}
+            renderRow={row}
+            pullToRefresh={
+              <PullToRefresh
+                refreshing={refreshing}
+                onRefresh={this.onRefresh} />
+            }
+            onEndReached={this.onEndReached}
+            pageSize={5} />
+        </div>
       </div>
     )
   }

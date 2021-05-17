@@ -49,21 +49,23 @@ class Setting extends Component {
     return (
       <div>
         <NavBar icon={<Icon type="left" />} onClick={()=>this.props.history.goBack()}>设置</NavBar>
-        <List>
-          <List.Item extra={
-            <ImagePicker
-              length="1"
-              multiple={false}
-              selectable={avatars.length<1}
-              files={avatars}
-              onChange={this.onChangeAvatar}/>}>头像</List.Item>
-          <InputItem placeholder='请输入所在公司' value={user.company ? user.company : ''} onChange={(val)=>this.setState({user: {...user, company:val}})}>所在公司:</InputItem>
-          <InputItem placeholder='请输入职位' value={user.post ? user.post : ''} onChange={(val)=>this.setState({user: {...user, post:val}})}>职位:</InputItem>
-          <InputItem placeholder='请输入月薪' value={user.salary ? user.salary : ''} onChange={(val)=>this.setState({user: {...user, salary:val}})}>月薪:</InputItem>
-          <TextareaItem value={user.info ? user.info : ''} title="个人简介" autoHeight labelNumber={5} rows="5" placeholder="填写个人简介" onChange={(val)=>{this.setState({user: {...user, info: val}})}}/>
-          <WhiteSpace size="xl"/>
-          <Button type="primary" onClick={this.updateSetting}>更新设置</Button>
-        </List>
+        <div className='container'>
+          <List>
+            <List.Item extra={
+              <ImagePicker
+                length="1"
+                multiple={false}
+                selectable={avatars.length<1}
+                files={avatars}
+                onChange={this.onChangeAvatar}/>}>头像</List.Item>
+            <InputItem placeholder='请输入所在公司' value={user.company ? user.company : ''} onChange={(val)=>this.setState({user: {...user, company:val}})}>所在公司:</InputItem>
+            <InputItem placeholder='请输入职位' value={user.post ? user.post : ''} onChange={(val)=>this.setState({user: {...user, post:val}})}>职位:</InputItem>
+            <InputItem placeholder='请输入月薪' value={user.salary ? user.salary : ''} onChange={(val)=>this.setState({user: {...user, salary:val}})}>月薪:</InputItem>
+            <TextareaItem value={user.info ? user.info : ''} title="个人简介" autoHeight labelNumber={5} rows="5" placeholder="填写个人简介" onChange={(val)=>{this.setState({user: {...user, info: val}})}}/>
+            <WhiteSpace size="xl"/>
+            <Button type="primary" onClick={this.updateSetting}>更新设置</Button>
+          </List>
+        </div>
       </div>
     )
   }

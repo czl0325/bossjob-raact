@@ -44,20 +44,22 @@ class Login extends Component {
     return (
       <Fragment>
         <NavBar>用户登录</NavBar>
-        <img src={Logo} alt="Logo" width="240" height="240" style={{display: 'block', margin: '20px auto'}}/>
-        <List>
-          <WingBlank>
-            <InputItem placeholder="请输入用户名" onChange={(val) => this.handleChange("username", val)}>用户名:</InputItem>
-          </WingBlank>
-          <WingBlank>
-            <InputItem type="password" placeholder="请输入密码"
-                       onChange={(val) => this.handleChange("password", val)}>密&nbsp;&nbsp;&nbsp;码:</InputItem>
-          </WingBlank>
-          <WhiteSpace/>
-          <Button type="primary" onClick={this.onLogin}>登录</Button>
-          <WhiteSpace/>
-          <Button onClick={this.toRegister}>还没有账户</Button>
-        </List>
+        <div className='container'>
+          <img src={Logo} alt="Logo" width="240" height="240" style={{display: 'block', margin: '20px auto'}}/>
+          <List>
+            <WingBlank>
+              <InputItem placeholder="请输入用户名" onChange={(val) => this.handleChange("username", val)}>用户名:</InputItem>
+            </WingBlank>
+            <WingBlank>
+              <InputItem type="password" placeholder="请输入密码"
+                         onChange={(val) => this.handleChange("password", val)}>密&nbsp;&nbsp;&nbsp;码:</InputItem>
+            </WingBlank>
+            <WhiteSpace/>
+            <Button type="primary" onClick={this.onLogin}>登录</Button>
+            <WhiteSpace/>
+            <Button onClick={this.toRegister}>还没有账户</Button>
+          </List>
+        </div>
       </Fragment>
     )
   }

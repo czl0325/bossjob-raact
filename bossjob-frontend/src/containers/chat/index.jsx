@@ -25,6 +25,7 @@ class Chat extends Component {
     const to_id = this.props.match.params.user_id
     getChatMessageList(to_id).then(res=>{
       this.setState({messageList: res})
+      window.scrollTo(0, document.body.scrollHeight)
     })
   }
 
@@ -48,7 +49,7 @@ class Chat extends Component {
     return (
       <div>
         <NavBar icon={<Icon type="left" />} onLeftClick={()=>this.props.history.goBack()}>聊天列表</NavBar>
-        <div style={{marginBottom:'50px'}}>
+        <div className='container'>
           {
             messageList.map(message => {
               return <ChatItem key={message._id} chat={message} />

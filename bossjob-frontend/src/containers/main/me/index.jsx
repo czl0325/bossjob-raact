@@ -45,23 +45,25 @@ class Me extends Component {
     return (
       <div>
         <NavBar>我的</NavBar>
-        <Result
-          img={<img src={user.avatar ? getPictureUrl(user.avatar) : Avatar} alt='头像' className='avatar' onClick={this.toSetting}/>}
-          title={user.username}
-          message={user.company}
-        />
-        <WhiteSpace />
-        <List>
-          <List.Item multipleLine>
-            <List.Item.Brief>职位：{user.post}</List.Item.Brief>
-            <List.Item.Brief>简介：{user.info}</List.Item.Brief>
-            <List.Item.Brief>月薪：{user.salary}</List.Item.Brief>
-          </List.Item>
-        </List>
-        <WhiteSpace />
-        <List >
-          <Button type="warning" onClick={this.logout}>退出登录</Button>
-        </List>
+        <div className='container'>
+          <Result
+            img={<img src={user.avatar ? getPictureUrl(user.avatar) : Avatar} alt='头像' className='avatar' onClick={this.toSetting}/>}
+            title={user.username}
+            message={user.company}
+          />
+          <WhiteSpace />
+          <List>
+            <List.Item multipleLine>
+              <List.Item.Brief>职位：{user.post}</List.Item.Brief>
+              <List.Item.Brief>简介：{user.info}</List.Item.Brief>
+              <List.Item.Brief>月薪：{user.salary}</List.Item.Brief>
+            </List.Item>
+          </List>
+          <WhiteSpace />
+          <List >
+            <Button type="warning" onClick={this.logout}>退出登录</Button>
+          </List>
+        </div>
       </div>
     )
   }

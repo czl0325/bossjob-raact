@@ -11,6 +11,9 @@ export default class index extends Component {
     return (
       <div>
         <NavBar>消息</NavBar>
+        <div className='container'>
+
+        </div>
       </div>
     )
   }
