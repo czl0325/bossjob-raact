@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {Grid, InputItem, Icon, NavBar, Toast} from "antd-mobile";
+import QueueAnim from 'rc-queue-anim';
 import {createReceiveMessageListAction, createSendMessageAction} from "../../redux/actions";
 import ChatItem from "../../components/ChatItem";
 import {getChatMessageList} from "../../api/api";
@@ -33,6 +34,17 @@ class Chat extends Component {
     window.scrollTo(0, document.body.scrollHeight)
   }
 
+  toggleShow = () => {
+    const showEmoji = !this.state.showEmoji
+    this.setState({showEmoji}, ()=>{
+      if (showEmoji) {
+        setTimeout(()=>{
+          window.dispatchEvent(new Event("resize"))
+        },100)
+      }
+    })
+  }
+
   handleSend = () => {
     const from_id = this.props.user._id || getUserId()
     const to_id = this.props.match.params.user_id
@@ -58,12 +70,18 @@ class Chat extends Component {
     return (
       <div>
         <NavBar icon={<Icon type="left" />} onLeftClick={()=>this.props.history.goBack()}>聊天列表</NavBar>
-        <div className='container'>
+        <div className='container' style={{marginBottom: showEmoji?'232px':'47px'}}>
           {
             Array.isArray(messageList) ?
-            messageList.map(message => {
-              return <ChatItem key={message._id} chat={message} />
-            }) : null
+              <QueueAnim type='left' delay={50}>
+                {
+                  messageList.map(message => {
+                    return (
+                        <ChatItem key={message._id} chat={message} />
+                      )
+                  })
+                }
+              </QueueAnim> : null
           }
         </div>
         <div className="am-tab-bar" style={{position:'fixed', bottom:0, width: '100%', left: 0, height: "inherit"}}>
@@ -74,14 +92,14 @@ class Chat extends Component {
             onFocus={()=>this.setState({showEmoji: false})}
             extra={
               <span>
-                <span onClick={()=>this.setState({showEmoji: !showEmoji})} style={{marginRight:10}}>😊</span>
+                <span onClick={this.toggleShow} style={{marginRight:10}}>😊</span>
                 <span onClick={this.handleSend}>发送</span>
               </span>
           }/>
+          {
+            showEmoji ? <Grid data={this.emojis} columnNum={8} carouselMaxRow={4} isCarousel={true} onClick={item=>this.setState({content: content+item.text})}/> : null
+          }
         </div>
-        {
-          showEmoji ? <Grid data={this.emojis} columnNum={8} carouselMaxRow={4} isCarousel={true} onClick={item=>this.setState({content: content+item.text})}/> : null
-        }
       </div>
     )
   }
