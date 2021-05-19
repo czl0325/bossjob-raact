@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import { TabBar } from 'antd-mobile';
+import {NavBar, TabBar} from 'antd-mobile';
 import PubSub from 'pubsub-js';
 import '../../assets/iconfont/iconfont.css'
 import Home from './home'
@@ -33,20 +33,33 @@ class Main extends Component {
     }
   }
 
+  mainTitle = () => {
+    if (this.props.tab === 'home') {
+      return '首页'
+    } else if (this.props.tab === 'message') {
+      return '消息'
+    } else {
+      return '我的'
+    }
+  }
+
   render() {
     return (
-      <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }} >
-        <TabBar tintColor="#53beb8" tabBarPosition="bottom">
-          <TabBar.Item title="首页" icon={<i style={{fontSize: '28px'}} className="iconfont icon-Homehomepagemenu"/>} selectedIcon={<i style={{fontSize: '28px'}} className="iconfont icon-Homehomepagemenu"/>} key="home" selected={this.props.tab==="home"} onPress={()=>{ this.props.createTabAction("home") }} >
-            <Home />
-          </TabBar.Item>
-          <TabBar.Item title="消息" key="message" icon={<i style={{fontSize: '28px'}} className="iconfont icon-message"/>} selectedIcon={<i style={{fontSize: '28px'}} className="iconfont icon-message"/>} selected={this.props.tab==="message"} onPress={()=>{ this.props.createTabAction("message") }}>
-            <Message />
-          </TabBar.Item>
-          <TabBar.Item title="我的" key="me" icon={<i style={{fontSize: '28px'}} className="iconfont icon-me"/>} selectedIcon={<i style={{fontSize: '28px'}} className="iconfont icon-me"/>} selected={this.props.tab==="me"} onPress={()=>{ this.props.createTabAction("me") }}>
-            <Me/>
-          </TabBar.Item>
-        </TabBar>
+      <div>
+        <NavBar>{this.mainTitle()}</NavBar>
+        <div style={{ position: 'fixed', height: 'calc(100% - 45px)', width: '100%', bottom: 0 }} >
+          <TabBar tintColor="#53beb8" tabBarPosition="bottom">
+            <TabBar.Item title="首页" icon={<i style={{fontSize: '28px'}} className="iconfont icon-Homehomepagemenu"/>} selectedIcon={<i style={{fontSize: '28px'}} className="iconfont icon-Homehomepagemenu"/>} key="home" selected={this.props.tab==="home"} onPress={()=>{ this.props.createTabAction("home") }} >
+              <Home />
+            </TabBar.Item>
+            <TabBar.Item title="消息" key="message" icon={<i style={{fontSize: '28px'}} className="iconfont icon-message"/>} selectedIcon={<i style={{fontSize: '28px'}} className="iconfont icon-message"/>} selected={this.props.tab==="message"} onPress={()=>{ this.props.createTabAction("message") }}>
+              <Message />
+            </TabBar.Item>
+            <TabBar.Item title="我的" key="me" icon={<i style={{fontSize: '28px'}} className="iconfont icon-me"/>} selectedIcon={<i style={{fontSize: '28px'}} className="iconfont icon-me"/>} selected={this.props.tab==="me"} onPress={()=>{ this.props.createTabAction("me") }}>
+              <Me/>
+            </TabBar.Item>
+          </TabBar>
+        </div>
       </div>
     )
   }

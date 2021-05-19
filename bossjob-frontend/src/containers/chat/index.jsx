@@ -85,15 +85,11 @@ class Chat extends Component {
         <div className='container' style={{marginBottom: showEmoji?'232px':'47px'}}>
           {
             Array.isArray(messageList) ?
-              <QueueAnim type='left' delay={50}>
-                {
-                  messageList.map(message => {
-                    return (
-                        <ChatItem key={message._id} chat={message} />
-                      )
-                  })
-                }
-              </QueueAnim> : null
+              messageList.map(message => {
+                return (
+                    <ChatItem key={message._id} chat={message} />
+                  )
+              }) : null
           }
         </div>
         <div className="am-tab-bar" style={{position:'fixed', bottom:0, width: '100%', left: 0, height: "inherit"}}>

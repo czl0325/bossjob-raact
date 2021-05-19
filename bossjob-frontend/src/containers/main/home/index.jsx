@@ -82,8 +82,7 @@ class Home extends Component {
 
     return (
       <div>
-        <NavBar>首页</NavBar>
-        <div className='container'>
+        <div className='container' style={{marginTop: 0}}>
           <ListView
             style={{height:'calc(100vh - 92px)',overflow:'auto'}}
             dataSource={dataSource.cloneWithRows(users)}
